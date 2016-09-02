@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "CrBug Watcher",
+  "short_name": "CrBugWatcher",
+  "description": "Monitor the current CrBug.com page for changes",
+  "version": "0.0.0.1",
+  "author": "Eric Lawrence (@ericlaw)",
+
+  "minimum_chrome_version": "48",
+
+  "icons": { 
+      "38": "images/icon38.png"
+  },
+
+  "content_scripts": [
+      {
+        "js": [
+            "bugwatcher.js"
+        ],
+        "matches": [
+            "*://bugs.chromium.org/p/*/issues/detail?*"
+        ],
+        "run_at": "document_end"
+      }
+  ]
+}
