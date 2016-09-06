@@ -66,7 +66,8 @@ function updateClock() {
 
     if (idTimer) idTimer = window.setTimeout( updateClock, iSyncMS);
 
-    // Bail fast if hidden
+    // Bail fast if hidden. 
+    // After this bug in Chrome is fixed https://bugs.chromium.org/p/chromium/issues/detail?id=532128
     if (document.hidden) return;
 
     let uiAgo = document.getElementById("uiAgo");
