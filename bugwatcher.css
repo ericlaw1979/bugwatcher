@@ -1,0 +1,31 @@
+#uiLastSync
+{
+  width:100px;
+  padding: 0px 5px;
+  line-height: 0.9;
+  background: #C0FFB0;
+}
+
+.needs-sync #uiSyncInfobar
+{
+  background: #FAFE63;
+  padding: 3px 5px;
+}
+
+.needs-sync #makechangesarea,
+.needs-sync #issuemeta,
+.needs-sync .issuemetaheader,
+.needs-sync #addCommentTextArea
+{
+  background: #feffd5;
+}
+
+.needs-sync #cursorarea
+{
+  background: #fafafa;
+}
+
+.needs-sync #uiLastSync
+{
+  background: #FAFE63;
+}

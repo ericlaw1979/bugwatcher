@@ -15,9 +15,8 @@
 
   "content_scripts": [
       {
-        "js": [
-            "bugwatcher.js"
-        ],
+        "js": [ "bugwatcher.js" ],
+        "css": [ "bugwatcher.css" ],
         "matches": [
             "*://bugs.chromium.org/p/*/issues/detail?*"
         ],
