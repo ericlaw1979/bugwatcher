@@ -5,7 +5,11 @@
   "description": "Monitor the current CrBug.com page for changes",
   "version": "0.0.0.1",
   "author": "Eric Lawrence (@ericlaw)",
-
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  
   "minimum_chrome_version": "48",
 
   "icons": { 
@@ -22,5 +26,7 @@
         ],
         "run_at": "document_end"
       }
-  ]
+  ],
+  
+  "permissions": ["storage"]
 }

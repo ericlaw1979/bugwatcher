@@ -1,7 +1,7 @@
 "use strict";
 
 {
-const iSyncMS = 10000;
+let iSyncMS = 10000;
 const cCommentsAtLoad = document.querySelectorAll('.issuecommentheader').length;
 let idTimer = window.setTimeout( updateClock, iSyncMS);
 let cUpdates = 0;
@@ -12,6 +12,19 @@ function Now() {
 
 // Refetch this page from the server to see if any items have been added.
 function checkForUpdates() {
+
+  chrome.storage.sync.get(null, function(prefs) 
+  {
+    if (prefs) {
+      const iMS = prefs["iSyncMS"];
+      if (iMS > 9999)
+      {
+        iSyncMS = iMS;
+        console.log("Bugwatcher: Setting interval to " + iSyncMS);
+      }
+    }
+  });
+
   const oReq = new XMLHttpRequest();
   oReq.addEventListener("load",  function(e) { 
     let newDoc = e.target.response;
@@ -33,7 +46,7 @@ function checkForUpdates() {
     let uiFutureHeading = document.createElement('div');
     uiFutureHeading.innerHTML = "<h2>New Comments Preview</h2>";
     frag.appendChild(uiFutureHeading);
-    
+
     // Inspired by https://gist.github.com/ebidel/3581825
     [].forEach.call(arrCommentsNow, function(cmt, i) {
       let txtHeader = cmt.querySelector('.issuecommentheader');
@@ -60,7 +73,7 @@ function checkForUpdates() {
 
     oReq.open("GET", document.location.href, true);         // TODO: Sanity check?
     oReq.setRequestHeader("Cache-Control", "max-age=0");
-    oReq.setRequestHeader("X-Client", "BugWatcher Chrome Extension");
+    oReq.setRequestHeader("X-Client", "BugWatcher Chrome Extension by elawrence@");
     oReq.timeout = 5000;
     oReq.send();
 }
@@ -86,7 +99,7 @@ uiSyncInfobar.addEventListener('click', function(e) { checkForUpdates(); }, fals
 
 function updateClock() {
 
-    if (idTimer) idTimer = window.setTimeout( updateClock, iSyncMS);
+    if (idTimer) idTimer = window.setTimeout(updateClock, iSyncMS);
 
     // Bail fast if hidden. This will only work after this bug in Chrome 
     // is fixed: https://bugs.chromium.org/p/chromium/issues/detail?id=532128
@@ -96,7 +109,7 @@ function updateClock() {
     }
 
     let uiAgo = document.getElementById("uiAgo");
-    uiAgo.innerText = Now() + " (" + ++cUpdates + ") ";
+    if (uiAgo) uiAgo.innerText = Now() + " (" + ++cUpdates + ") ";
 
     checkForUpdates();
 }
