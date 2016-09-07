@@ -1,0 +1,32 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="assets/styles.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="assets/styles-options.css" type="text/css" media="all" />
+    <title>BugWatcher Options</title>
+    <script defer type="text/javascript" src="options.js"></script>
+    <style>
+        body: { padding: 15px; }
+        a { text-decoration: none; }
+        label { -webkit-user-select: none; 
+                  cursor: pointer;
+                  padding-bottom: 7px;
+                  padding-top: 7px;
+              }
+        input[type=checkbox] {
+            margin-right:5px;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+    <label for="rangeUpdateInterval">Sync every </label>
+    <input style="vertical-align:middle" type="range" id="rangeUpdateInterval" min="1" value="1" max="1" step="1">
+    <output for="rangeUpdateInterval" id="txtUpdateInterval"></output>
+    </p>
+    <hr style="margin: 15px 0px 15px 0px;" />
+    <p>
+            <div style="text-align: center;" id="txtStatus">&nbsp;</div>
+    </p>
+</body>
