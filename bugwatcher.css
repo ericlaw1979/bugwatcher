@@ -6,6 +6,12 @@
   background: #C0FFB0;
 }
 
+.future-comments
+{
+ background: #fef0ff;
+ padding: 5px 20px;
+}
+
 .needs-sync #uiSyncInfobar
 {
   background: #FAFE63;
