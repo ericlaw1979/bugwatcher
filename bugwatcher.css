@@ -12,6 +12,11 @@
  padding: 5px 20px;
 }
 
+#uiSyncInfobar
+{
+  cursor: pointer; 
+}
+
 .needs-sync #uiSyncInfobar
 {
   background: #FAFE63;
