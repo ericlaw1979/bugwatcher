@@ -1,7 +1,7 @@
 "use strict";
 
 {
-let iSyncMS = 10000;
+let iSyncMS = 60000;
 const cCommentsAtLoad = document.querySelectorAll('.issuecommentheader').length;
 let idTimer = window.setTimeout( updateClock, iSyncMS);
 let cUpdates = 0;
@@ -74,7 +74,7 @@ function checkForUpdates() {
     oReq.open("GET", document.location.href, true);         // TODO: Sanity check?
     oReq.setRequestHeader("Cache-Control", "max-age=0");
     oReq.setRequestHeader("X-Client", "BugWatcher Chrome Extension by elawrence@");
-    oReq.timeout = 5000;
+    oReq.timeout = 9500;    // "Nine and a half-seconds out to be enough for anybody."
     oReq.send();
 }
 
@@ -115,8 +115,5 @@ function updateClock() {
 }
 
 // TODO:
-// Add "peek" option that pulls comments into markup in the right place
-// Add "Refresh keep draft comment"
-// Ping with backoff; stop pinging when user is away (somehow)
 // "Monitor" checkbox in the bug UI
 }
