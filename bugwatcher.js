@@ -2,7 +2,7 @@
 
 {
 let iSyncMS = 60000;
-const cCommentsAtLoad = document.querySelectorAll('.issuecommentheader').length;
+let cCommentsAtLoad = document.querySelectorAll('.issuecommentheader').length;
 let idTimer = window.setTimeout(updateClock, iSyncMS);
 let cUpdates = 0;
 
