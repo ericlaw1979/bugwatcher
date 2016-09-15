@@ -10,20 +10,27 @@ function Now() {
   return (new Date()).toLocaleTimeString(sLang, { hour12: false });
 }
 
-// Refetch this page from the server to see if any items have been added.
-function checkForUpdates() {
-  console.log("BugWatcher: checking for updates...");
-  chrome.storage.sync.get(null, function(prefs) 
+function UpdatePollingInterval()
+{
+  chrome.storage.sync.get(null, function(prefs)
   {
     if (prefs) {
       const iMS = prefs["iSyncMS"];
-      if (iMS > 9999)
+      if ((iMS > 9999) && (iSyncMS != iMS))
       {
         iSyncMS = iMS;
-        console.log("BugWatcher: Setting interval to " + iSyncMS);
+        console.log("BugWatcher: Adjusting poll interval to " + iSyncMS);
       }
     }
   });
+}
+
+UpdatePollingInterval();
+
+// Refetch this page from the server to see if any items have been added.
+function checkForUpdates() {
+  console.log("BugWatcher: checking for updates at " + Now());
+  UpdatePollingInterval();
 
   const oReq = new XMLHttpRequest();
   oReq.addEventListener("load",  function(e) { 
@@ -102,7 +109,18 @@ uiLastSync.innerHTML = "Loaded<br />" + oNow.toLocaleTimeString(sLang, { hour12:
 uiLastSync.title = "This page was first loaded at " + oNow.toLocaleString() + "\nwith " + cCommentsAtLoad + " comments.";
 uiUserbar.parentNode.insertBefore(uiLastSync, uiUserbar);
 
-const uiAddComment = document.getElementById("addCommentTextArea");
+let uiAddComment = document.getElementById("addCommentTextArea");
+
+// Handle case where user is not logged in and thus there's no addComment box to insert before
+if (!uiAddComment) {
+    let uiTable = document.getElementById("meta-container");
+    let uiRow = uiTable.insertRow(-1);
+    uiRow.insertCell();
+    let uiCol = uiRow.insertCell();
+    uiAddComment = document.createElement("span");
+    uiCol.appendChild(uiAddComment);
+}
+
 const uiSyncInfobar = document.createElement("div");
 uiSyncInfobar.id = "uiSyncInfobar";
 uiSyncInfobar.innerHTML = "<i>This issue last sync'd at <span id=uiAgo>" + Now() + "</span> </i>";
