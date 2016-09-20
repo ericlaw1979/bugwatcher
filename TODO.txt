@@ -1,0 +1,43 @@
+On Paste, add image
+
+function TKR_addAttachmentFields(id, attachprompt_id,
+    attachafile_id, attachmaxsize_id) {
+  if (TKR_nextFileID >= 16) {
+    return;
+  }
+  if (typeof attachprompt_id === 'undefined')
+    attachprompt_id = TKR_ATTACHPROMPT_ID;
+  if (typeof attachafile_id === 'undefined')
+    attachafile_id = TKR_ATTACHAFILE_ID;
+  if (typeof attachmaxsize_id === 'undefined')
+    attachmaxsize_id = TKR_ATTACHMAXSIZE_ID;
+  var el = $(id);
+  el.style.marginTop = '4px';
+  var div = document.createElement('div');
+  var id = 'file' + TKR_nextFileID;
+  var label = TKR_createChild(div, 'label', null, null, 'Attach file:');
+  label.setAttribute('for', id);
+  var input = TKR_createChild(
+      div, 'input', null, id, null, "width:auto;margin-left:17px");
+  input.setAttribute('type', 'file');
+  input.name = id;
+  var removeLink = TKR_createChild(
+      div, 'a', null, null, 'Remove', "font-size:x-small");
+  removeLink.href = '#';
+  removeLink.addEventListener('click', function(event) {
+          console.log(arguments);
+          var target = event.target;
+          $(attachafile_id).focus();
+          target.parentNode.parentNode.removeChild(target.parentNode);
+          event.preventDefault();
+      });
+  el.appendChild(div);
+  el.querySelector('input').focus();
+  ++TKR_nextFileID;
+  if (TKR_nextFileID < 16) {
+    $(attachafile_id).innerText = 'Attach another file';
+  } else {
+    $(attachprompt_id).style.display = 'none';
+  }
+  $(attachmaxsize_id).style.display = '';
+}
