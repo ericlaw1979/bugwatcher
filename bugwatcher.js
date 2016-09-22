@@ -52,6 +52,13 @@
         // Issue Unchanged?
         if (cCommentsNow == cCommentsAtLoad) return;
 
+        if (cCommentsNow < cCommentsAtLoad)
+        {
+            console.log("BugWatcher: Assertion failed; CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow);
+            document.getElementById("uiSyncInfobar").innerText = "Sync error! CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow;
+            return;
+        }
+
         idTimer = null;
         document.getElementById("uiSyncInfobar").innerText = "This issue has been updated; it now has "
                                         + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused.";
