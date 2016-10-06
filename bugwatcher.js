@@ -13,8 +13,7 @@
 
     function UpdatePollingInterval(cont)
     {
-      chrome.storage.sync.get(null, function(prefs)
-      {
+      chrome.storage.sync.get(null, function(prefs) {
         if (prefs) {
           const iMS = prefs["iSyncMS"];
           if ((iMS > 9999) && (iSyncMS != iMS))
@@ -52,8 +51,7 @@
         // Issue Unchanged?
         if (cCommentsNow == cCommentsAtLoad) return;
 
-        if (cCommentsNow < cCommentsAtLoad)
-        {
+        if (cCommentsNow < cCommentsAtLoad) {
             console.log("BugWatcher: Assertion failed; CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow);
             document.getElementById("uiSyncInfobar").innerText = "Sync error! CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow;
             return;
@@ -66,8 +64,7 @@
         document.body.classList.add('needs-sync');
 
         let uiNewComments = document.getElementById("uiNewComments");
-        if (!uiNewComments)
-        {
+        if (!uiNewComments) {
             uiNewComments = document.createElement("div");
             uiNewComments.id = "uiNewComments";
             uiNewComments.classList.add('future-comments');
@@ -111,7 +108,7 @@
 
     const uiLastSync = document.createElement("th");
     uiLastSync.id = "uiLastSync";
-    
+
     const uiUserbar = document.getElementById("userbar");
     const oNow = new Date();
     const sLang = navigator.languages[0] || "en-US";
@@ -130,14 +127,14 @@
         uiAddComment = document.createElement("span");
         uiCol.appendChild(uiAddComment);
     }
-    
+
     const uiSyncInfobar = document.createElement("div");
     uiSyncInfobar.id = "uiSyncInfobar";
     uiSyncInfobar.innerHTML = "<i>This issue last sync'd at <span id=uiAgo>" + Now() + "</span> </i>";
     //"<b>Warning</b>: This bug has been modified since you loaded this page. <a style='text-decoration:none' href='#'>Peek</a>";
     uiAddComment.parentNode.insertBefore(uiSyncInfobar, uiAddComment);
     uiSyncInfobar.addEventListener('click', function(e) { checkForUpdates(); }, false);
-    
+
     uiAddComment.addEventListener('paste', function(e) { 
         // alert("pasted: " + e.clipboardData.types);
         if (e.clipboardData.types.indexOf('Files') < 0) return;
