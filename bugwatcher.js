@@ -38,7 +38,7 @@
       const oReq = new XMLHttpRequest();
       oReq.addEventListener("load",  function(e) { 
         // Update Top-Notice
-        uiLastSync.innerHTML = "Sync'd<br />" + oNow.toLocaleTimeString(sLang, { hour12: false });
+        uiLastSync.innerHTML = "Sync'd<br />" + Now();
 
         // Update Infobar
         let uiAgo = document.getElementById("uiAgo");
@@ -48,18 +48,24 @@
         let arrCommentsNow = newDoc.querySelectorAll('.issuecomment');
         let cCommentsNow = arrCommentsNow.length;
 
-        // Issue Unchanged?
-        if (cCommentsNow == cCommentsAtLoad) return;
-
         if (cCommentsNow < cCommentsAtLoad) {
             console.log("BugWatcher: Assertion failed; CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow);
             document.getElementById("uiSyncInfobar").innerText = "Sync error! CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow;
             return;
         }
 
+        // Issue Unchanged?
+        if (cCommentsNow == cCommentsAtLoad) {
+            if (!idTimer) {
+                document.getElementById("uiSyncInfobar").innerText = "Issue was updated since original load; it now has "
+                                        + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused; last check at " + Now();
+            }
+          return;
+        }
+
         idTimer = null;
         document.getElementById("uiSyncInfobar").innerText = "This issue has been updated; it now has "
-                                        + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused.";
+                                        + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused at " + Now();
         //document.getElementById("uiLastSync").classList.add('needs-sync');
         document.body.classList.add('needs-sync');
 
