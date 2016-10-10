@@ -32,6 +32,14 @@
 
     // Refetch this page from the server to see if any items have been added.
     function checkForUpdates() {
+
+      const uiInfoBar = document.getElementById("uiSyncInfobar");
+      const uiAgo = document.getElementById("uiAgo");
+
+      if (uiAgo) {
+        uiAgo.innerText = (uiAgo.innerText + " [Rechecking now...]");
+      }
+
       console.log("BugWatcher: checking for updates at " + Now());
       UpdatePollingInterval();
 
@@ -41,7 +49,6 @@
         uiLastSync.innerHTML = "Sync'd<br />" + Now();
 
         // Update Infobar
-        let uiAgo = document.getElementById("uiAgo");
         if (uiAgo) uiAgo.innerText = Now() + " (" + ++cUpdates + ") ";
 
         let newDoc = e.target.response;
@@ -50,22 +57,22 @@
 
         if (cCommentsNow < cCommentsAtLoad) {
             console.log("BugWatcher: Assertion failed; CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow);
-            document.getElementById("uiSyncInfobar").innerText = "Sync error! CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow;
+            uiInfoBar.innerText = "Sync error! CommentsAtLoad: " + cCommentsAtLoad + ", CommentsNow: " + cCommentsNow;
             return;
         }
 
         // Issue Unchanged?
         if (cCommentsNow == cCommentsAtLoad) {
             if (!idTimer) {
-                document.getElementById("uiSyncInfobar").innerText = "Issue was updated since original load; it now has "
-                                        + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused; last check at " + Now();
+              uiInfoBar.innerText = "Issue was updated since original load; it now has "
+                                  + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused; last check at " + Now();
             }
           return;
         }
 
         idTimer = null;
-        document.getElementById("uiSyncInfobar").innerText = "This issue has been updated; it now has "
-                                        + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused at " + Now();
+        uiInfoBar.innerText = "This issue has been updated; it now has "
+                            + cCommentsNow + ((cCommentsNow == 1) ? " comment": " comments") + ". Sync paused at " + Now();
         //document.getElementById("uiLastSync").classList.add('needs-sync');
         document.body.classList.add('needs-sync');
 
@@ -99,7 +106,6 @@
 
         }, false);
 
-        const fnErr = function() { document.getElementById("uiSyncInfobar").innerText = "Sync failed." };
 
         oReq.responseType = 'document';
         oReq.addEventListener("error", fnErr, false);
