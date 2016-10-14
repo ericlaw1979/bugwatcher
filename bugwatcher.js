@@ -93,7 +93,7 @@
         [].forEach.call(arrCommentsNow, function(cmt, i) {
           let txtHeader = cmt.querySelector('.issuecommentheader');
           const iCommentNumber = /Comment ([0-9]+)/.exec(txtHeader.innerText)[1];
-          if (iCommentNumber <= cCommentsAtLoad) return;
+          if (iCommentNumber < cCommentsAtLoad) return;
           let txtBody = cmt.querySelector('.issuecommentbody');
           let divNew = document.createElement('div');
           divNew.appendChild(txtHeader);
@@ -106,6 +106,7 @@
 
         }, false);
 
+        const fnErr = function() { if (uiAgo) uiAgo.innerText = (uiAgo.innerText + " [Sync Failed]"); };
 
         oReq.responseType = 'document';
         oReq.addEventListener("error", fnErr, false);
