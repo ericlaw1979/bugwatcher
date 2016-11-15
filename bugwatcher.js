@@ -97,7 +97,7 @@
           let txtBody = cmt.querySelector('.issuecommentbody');
           let divNew = document.createElement('div');
           divNew.appendChild(txtHeader);
-          divNew.appendChild(txtBody);
+          if (txtBody) divNew.appendChild(txtBody);
           frag.appendChild(divNew);
         });
         uiNewComments.appendChild(frag);

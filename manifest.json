@@ -3,7 +3,7 @@
   "name": "CrBug Watcher",
   "short_name": "CrBugWatcher",
   "description": "Monitor the current CrBug.com page for changes",
-  "version": "0.0.0.6",
+  "version": "0.0.0.7",
   "author": "Eric Lawrence (@ericlaw)",
   "options_ui": {
     "page": "options.html",
